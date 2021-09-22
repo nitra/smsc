@@ -25,6 +25,7 @@
     "prettier-config-standard": "^4.0.0"
   },
   "dependencies": {
-    "@47ng/check-env": "^2.0.2"
+    "@47ng/check-env": "^2.0.2",
+    "node-fetch": "^3.0.0"
   }
 }
