@@ -1,0 +1,30 @@
+{
+  "name": "smsc",
+  "version": "1.0.0",
+  "description": "SMSC.ru api",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "standard": "npx standard --fix",
+    "fix": "npx standard --fix && npx prettier --write .",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitra/smsc.git"
+  },
+  "author": "v@nitra.ai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nitra/smsc/issues"
+  },
+  "homepage": "https://github.com/nitra/smsc#readme",
+  "devDependencies": {
+    "prettier-config-standard": "^4.0.0"
+  },
+  "dependencies": {
+    "@47ng/check-env": "^2.0.2"
+  }
+}
