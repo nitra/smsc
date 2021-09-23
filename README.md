@@ -1,35 +1,19 @@
-# @nitra/consola
+# smsc
 
 [![GitHub Super-Linter](https://github.com/nitra/smsc/workflows/npm-publish/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-## Show filename in console
+## Configuration for test
 
-Check security header in Cloud Functions
+add .env.test.local
 
-```JavaScript
-import { createLogger } from '@nitra/consola'
-const consola = createLogger(import.meta.url)
-
-consola.debug('TEST')
+```env
+SMSC_PASS=secret
 ```
 
-## Show filename in console (browser version)
-
-Check security header in Cloud Functions
+## Usage
 
 ```JavaScript
-import { createLogger } from '@nitra/consola/browser'
-const consola = createLogger(import.meta.url)
+import { sendSms } from '../src'
 
-consola.debug('TEST')
-```
-
-## "Classic" consola
-
-without filename
-
-```JavaScript
-import consola from '@nitra/consola'
-
-consola.debug('TEST')
+await sendSms('+37120128611', 'test')
 ```

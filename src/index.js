@@ -26,9 +26,7 @@ export const sendSms = async (phones, message) => {
     })
     const data = await response.json()
 
-    console.log(data)
-
-    return 1
+    return data
   } catch (err) {
     console.error(err)
     return err

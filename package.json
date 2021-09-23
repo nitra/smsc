@@ -9,7 +9,7 @@
   "scripts": {
     "standard": "npx standard --fix",
     "fix": "npx standard --fix && npx prettier --write .",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --setupFiles dotenv-flow/config"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
+    "dotenv-flow": "^3.2.0",
     "prettier-config-standard": "^4.0.0"
   },
   "dependencies": {
