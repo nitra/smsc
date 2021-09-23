@@ -13,7 +13,7 @@ SMSC_PASS=secret
 ## Usage
 
 ```JavaScript
-import { sendSms } from '../src'
+import { sendSms } from 'smsc'
 
 await sendSms('+37120128611', 'test')
 ```
