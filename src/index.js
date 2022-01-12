@@ -1,9 +1,7 @@
-import checkEnv from '@47ng/check-env'
+import checkEnv from '@nitra/check-env'
 import fetch from 'node-fetch'
 
-checkEnv.default({
-  required: ['SMSC_LOGIN', 'SMSC_PASS']
-})
+checkEnv(['SMSC_LOGIN', 'SMSC_PASS'])
 
 const login = process.env.SMSC_LOGIN
 const password = process.env.SMSC_PASS

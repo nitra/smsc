@@ -2,10 +2,15 @@
 # yarn lockfile v1
 
 
-"@47ng/check-env@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@47ng/check-env/-/check-env-2.0.2.tgz#cd7b5c77488d00bf3465b26c7d93a13bd5768e60"
-  integrity sha512-sxxT3dhGcpsXp/yTI9ktXLVBoVp9SZQRZFxBYAXgU1lMPl7z+30kbKDTOUV9K/AdamJc9uq87ETkpyFqkSd58Q==
+"@nitra/check-env@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@nitra/check-env/-/check-env-2.0.5.tgz#01c0871da5b7964921a1275bb77841380616d78a"
+  integrity sha512-jxm6avIDtnHS/D43wLqNRuWKaxnfkEX9CRoxSxoSrC3lrMMJUT5LD2EuQ9yOg3DaWkZ4gqEVdLUaJRm6uPGoEQ==
+
+"@nitra/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nitra/prettier-config/-/prettier-config-1.0.0.tgz#f45519d5f85820b2c45981865b13ff4d360e4c0f"
+  integrity sha512-r/o48pk3Dnne/xQXXUd8Rv2fwNCvTZqT9DroiyFiLDty6tq36i/QaskBJsrv/GuYNKI07jeSN5mAVoxzOqvz4g==
 
 data-uri-to-buffer@^3.0.1:
   version "3.0.1"
@@ -38,11 +43,6 @@ node-fetch@^3.0.0:
   dependencies:
     data-uri-to-buffer "^3.0.1"
     fetch-blob "^3.1.2"
-
-prettier-config-standard@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-config-standard/-/prettier-config-standard-4.0.0.tgz#4cb82b87249e248bf47c69efbe3f9179abd16f70"
-  integrity sha512-K5J34NKeGyJvVVHUg4cAWDhtVYzT7UIRE9GbFyqHNZd61Pr0DHNTMsgoID7IVDmKc0QaLswYwKaNR2apbUJvkg==
 
 web-streams-polyfill@^3.0.3:
   version "3.1.1"
