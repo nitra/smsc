@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "language": "en,uk,ru-ru",
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/**",
+    ".vscode",
+    "yarn.lock",
+    "report"
+  ],
+  "import": [],
+  "words": [
+    "martinbeentjes",
+    "ncipollo",
+    "scottbrenner",
+    "smsc",
+    "stefanzweifel"
+  ]
+}
