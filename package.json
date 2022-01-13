@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
@@ -30,8 +30,9 @@
     "@nitra/prettier-config": "^1.0.0",
     "dotenv-flow": "^3.2.0"
   },
+  "prettier": "@nitra/prettier-config",
   "dependencies": {
-    "@nitra/check-env": "^2.0.5",
+    "@nitra/check-env": "^2.0.6",
     "node-fetch": "^3.0.0"
   },
   "files": [

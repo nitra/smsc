@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@nitra/check-env@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@nitra/check-env/-/check-env-2.0.5.tgz#01c0871da5b7964921a1275bb77841380616d78a"
-  integrity sha512-jxm6avIDtnHS/D43wLqNRuWKaxnfkEX9CRoxSxoSrC3lrMMJUT5LD2EuQ9yOg3DaWkZ4gqEVdLUaJRm6uPGoEQ==
+"@nitra/check-env@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@nitra/check-env/-/check-env-2.0.6.tgz#2d4f9b03ccc6d591bb8aa59a3530a4737b891ecf"
+  integrity sha512-pKt5XPHOil6jPmCfp+PJDiV4bQPH8yJY8OTYPtkAwmc2vNPh16dEK0OEQbSc4DfTLZCnli/ObAU80p+DXV2vjA==
 
 "@nitra/prettier-config@^1.0.0":
   version "1.0.0"
