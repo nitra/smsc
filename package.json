@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
