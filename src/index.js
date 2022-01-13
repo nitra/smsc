@@ -8,7 +8,7 @@ const password = process.env.SMSC_PASS
 const charset = 'utf-8'
 
 // Отправка CMC
-export const sendSms = async (phones, message) => {
+export const sendSms = async (phones, message, sender = '') => {
   try {
     const params = new URLSearchParams()
     params.append('login', login)
@@ -17,6 +17,9 @@ export const sendSms = async (phones, message) => {
     params.append('fmt', 3)
     params.append('phones', phones)
     params.append('mes', message)
+    if (sender.length) {
+      params.append('sender', sender)
+    }
 
     const response = await fetch('https://smsc.ru/sys/send.php', {
       method: 'POST',
