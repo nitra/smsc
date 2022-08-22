@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
@@ -10,7 +10,7 @@
   "scripts": {
     "standard": "npx standard --fix",
     "fix": "npx standard --fix && npx prettier --write .",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --setupFiles dotenv-flow/config"
+    "test": "env $(cat .env) npx coverage-node test/index.js"
   },
   "keywords": [
     "smsc",
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
     "@nitra/prettier-config": "^1.0.0",
-    "dotenv-flow": "^3.2.0"
+    "test-director": "10.0.0"
   },
   "prettier": "@nitra/prettier-config",
   "dependencies": {
