@@ -1,5 +1,4 @@
 import checkEnv from '@nitra/check-env'
-import fetch from 'node-fetch'
 import { keyv } from './keyv.js'
 
 checkEnv(['VODAFONE_URL', 'VODAFONE_LOGIN', 'VODAFONE_PASS', 'SMSC_LOGIN', 'SMSC_PASS'])

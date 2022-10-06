@@ -29,15 +29,23 @@
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
     "@nitra/prettier-config": "^1.0.0",
-    "test-director": "10.0.0"
+    "test-director": "10.0.0",
+    "@nitra/eslint-config": "^1.0.22"
   },
   "prettier": "@nitra/prettier-config",
   "dependencies": {
     "@keyv/redis": "^2.5.1",
     "@nitra/check-env": "^2.0.6",
     "@nitra/isenv": "^2.0.1",
-    "keyv": "^4.5.0",
-    "node-fetch": "^3.0.0"
+    "keyv": "^4.5.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@nitra/eslint-config/node"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "files": [
     "src"
