@@ -1,7 +1,8 @@
 import checkEnv from '@nitra/check-env'
 import fetch from 'node-fetch'
+import { keyv } from './keyv.js'
 
-checkEnv(['SMSC_LOGIN', 'SMSC_PASS'])
+checkEnv(['VODAFONE_URL', 'VODAFONE_LOGIN', 'VODAFONE_PASS', 'SMSC_LOGIN', 'SMSC_PASS'])
 
 const login = process.env.SMSC_LOGIN
 const password = process.env.SMSC_PASS
@@ -9,29 +10,15 @@ const charset = 'utf-8'
 
 // Отправка CMC
 export const sendSms = async (phones, message, sender = null) => {
-  try {
-    const params = new URLSearchParams()
-    params.append('login', login)
-    params.append('psw', password)
-    params.append('charset', charset)
-    params.append('fmt', 3)
-    params.append('phones', phones)
-    params.append('mes', message)
-    if (sender) {
-      params.append('sender', sender)
-    }
+  let data
 
-    const response = await fetch('https://smsc.ru/sys/send.php', {
-      method: 'POST',
-      body: params
-    })
-    const data = await response.json()
-
-    return data
-  } catch (err) {
-    console.error(err)
-    return err
+  if (getCountry(phones) === 'ua') {
+    data = await sendFromVf(phones, message, sender)
+  } else {
+    data = await sendFromSmsc(phones, message, sender)
   }
+
+  return data
 }
 
 // коды операторов
@@ -139,4 +126,113 @@ export const getCountry = phone => {
     return masks[mask]
   }
   return undefined
+}
+
+const getVfToken = async () => {
+  const vfRefreshToken = await keyv.get('vfRefreshToken')
+
+  const url = vfRefreshToken
+    ? `${process.env.VODAFONE_URL}uaa/oauth/token?grant_type=refresh_token&refresh_token=${vfRefreshToken}`
+    : `${process.env.VODAFONE_URL}uaa/oauth/token?grant_type=password&username=${process.env.VODAFONE_LOGIN}&password=${process.env.VODAFONE_PASS}`
+
+  // console.log('urlTokenData: ', url)
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      authorization: 'Basic aW50ZXJuYWw6aW50ZXJuYWw='
+    }
+  })
+
+  const data = await response.json()
+
+  // console.log('getTokenData: ', data)
+
+  if (!data?.access_token) {
+    return
+  }
+
+  await keyv.set('vfToken', data.access_token, (data.expires_in - 30) * 1000)
+  await keyv.set('vfRefreshToken', data.refresh_token, (data.refresh_token_expires_in - 30) * 1000)
+
+  return data.access_token
+}
+
+const sendFromVf = async (phoneNumber, content, sender) => {
+  try {
+    let vfToken = (await keyv.get('vfToken')) || (await getVfToken())
+
+    if (!vfToken) {
+      console.log('Error: could not get a token for vodafone...')
+      return { error_code: 1 }
+    }
+
+    let distributionId
+    if (sender === 'vybeeraicom') {
+      distributionId = 3728396
+    } else {
+      sender = 'ChernigivUA'
+      distributionId = 3729115
+    }
+
+    const response = fetch(
+      `${process.env.VODAFONE_URL}communication-event/api/communicationManagement/v2/communicationMessage/send`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+          Authorization: `bearer ${vfToken}`
+        },
+        body: JSON.stringify({
+          content,
+          type: 'SMS',
+          receiver: [{ id: 0, phoneNumber }],
+          sender: { id: sender },
+          characteristic: [
+            { name: 'DISTRIBUTION.ID', value: distributionId },
+            { name: 'VALIDITY.PERIOD', value: process.env.VODAFONE_VALIDITY_PERIOD_SMS }
+          ]
+        })
+      }
+    )
+    const result = await response
+
+    // console.log('resp: ', resp)
+
+    if (!result.ok) {
+      return { error_code: 1 }
+    }
+
+    return { cnt: 1 }
+  } catch (err) {
+    console.error(err)
+    return { error_code: 1 }
+  }
+}
+
+const sendFromSmsc = async (phones, message, sender) => {
+  try {
+    const params = new URLSearchParams()
+    params.append('login', login)
+    params.append('psw', password)
+    params.append('charset', charset)
+    params.append('fmt', 3)
+    params.append('phones', phones)
+    params.append('mes', message)
+    if (sender) {
+      params.append('sender', sender)
+    }
+
+    const response = await fetch('https://smsc.ru/sys/send.php', {
+      method: 'POST',
+      body: params
+    })
+    const data = await response.json()
+
+    return data
+  } catch (err) {
+    console.error(err)
+    return err
+  }
 }

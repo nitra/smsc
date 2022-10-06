@@ -1,7 +1,7 @@
 {
   "name": "smsc",
-  "version": "1.0.5",
-  "description": "SMSC.ru api",
+  "version": "2.0.0",
+  "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
   "exports": {
@@ -10,9 +10,10 @@
   "scripts": {
     "standard": "npx standard --fix",
     "fix": "npx standard --fix && npx prettier --write .",
-    "test": "env $(cat .env) npx coverage-node test/index.js"
+    "test": "env $(cat .env .env.secret) npx coverage-node test/index.js"
   },
   "keywords": [
+    "vodafone",
     "smsc",
     "nitra"
   ],
@@ -32,7 +33,10 @@
   },
   "prettier": "@nitra/prettier-config",
   "dependencies": {
+    "@keyv/redis": "^2.5.1",
     "@nitra/check-env": "^2.0.6",
+    "@nitra/isenv": "^2.0.1",
+    "keyv": "^4.5.0",
     "node-fetch": "^3.0.0"
   },
   "files": [
