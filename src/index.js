@@ -1,19 +1,33 @@
-import checkEnv from '@nitra/check-env'
 import { keyv } from './keyv.js'
+import { isProd } from '@nitra/isenv'
 
-checkEnv(['VODAFONE_URL', 'VODAFONE_LOGIN', 'VODAFONE_PASS', 'SMSC_LOGIN', 'SMSC_PASS'])
-
-const login = process.env.SMSC_LOGIN
-const password = process.env.SMSC_PASS
 const charset = 'utf-8'
 
 // Отправка CMC
-export const sendSms = async (phones, message, sender = null) => {
+export const sendSms = async (phones, message, sender = null, distributionId = null) => {
   let data
 
   if (getCountry(phones) === 'ua') {
-    data = await sendFromVf(phones, message, sender)
+    if (
+      !process.env.VODAFONE_BASE_URL ||
+      !process.env.VODAFONE_LOGIN ||
+      !process.env.VODAFONE_PASS ||
+      !process.env.VODAFONE_VALIDITY_PERIOD_SMS ||
+      (isProd && !process.env.REDIS_CONN)
+    ) {
+      console.error(
+        `environment variables: "VODAFONE_BASE_URL", "VODAFONE_LOGIN", "VODAFONE_PASS", "VODAFONE_VALIDITY_PERIOD_SMS", "REDIS_CONN" must be set to send SMS via vodafone!!! ("REDIS_CONN" only prod)`
+      )
+      return { error_code: 1 }
+    }
+
+    data = await sendFromVf(phones, message, sender, distributionId)
   } else {
+    if (!process.env.SMSC_LOGIN || !process.env.SMSC_PASS) {
+      console.error(`environment variables: "SMSC_LOGIN" and "SMSC_PASS" must be set to send SMS via smsc!!!`)
+      return { error_code: 1 }
+    }
+
     data = await sendFromSmsc(phones, message, sender)
   }
 
@@ -131,8 +145,8 @@ const getVfToken = async () => {
   const vfRefreshToken = await keyv.get('vfRefreshToken')
 
   const url = vfRefreshToken
-    ? `${process.env.VODAFONE_URL}uaa/oauth/token?grant_type=refresh_token&refresh_token=${vfRefreshToken}`
-    : `${process.env.VODAFONE_URL}uaa/oauth/token?grant_type=password&username=${process.env.VODAFONE_LOGIN}&password=${process.env.VODAFONE_PASS}`
+    ? `${process.env.VODAFONE_BASE_URL}uaa/oauth/token?grant_type=refresh_token&refresh_token=${vfRefreshToken}`
+    : `${process.env.VODAFONE_BASE_URL}uaa/oauth/token?grant_type=password&username=${process.env.VODAFONE_LOGIN}&password=${process.env.VODAFONE_PASS}`
 
   // console.log('urlTokenData: ', url)
 
@@ -157,25 +171,26 @@ const getVfToken = async () => {
   return data.access_token
 }
 
-const sendFromVf = async (phoneNumber, content, sender) => {
+const sendFromVf = async (phoneNumber, content, sender, distributionId) => {
   try {
-    let vfToken = (await keyv.get('vfToken')) || (await getVfToken())
+    const vfToken = (await keyv.get('vfToken')) || (await getVfToken())
 
     if (!vfToken) {
       console.log('Error: could not get a token for vodafone...')
       return { error_code: 1 }
     }
 
-    let distributionId
-    if (sender === 'vybeeraicom') {
-      distributionId = 3728396
-    } else {
-      sender = 'ChernigivUA'
-      distributionId = 3729115
+    if (!sender || !distributionId) {
+      if (sender === 'vybeeraicom') {
+        distributionId = 3728396
+      } else {
+        sender = 'ChernigivUA'
+        distributionId = 3729115
+      }
     }
 
     const response = fetch(
-      `${process.env.VODAFONE_URL}communication-event/api/communicationManagement/v2/communicationMessage/send`,
+      `${process.env.VODAFONE_BASE_URL}communication-event/api/communicationManagement/v2/communicationMessage/send`,
       {
         method: 'POST',
         headers: {
@@ -213,8 +228,8 @@ const sendFromVf = async (phoneNumber, content, sender) => {
 const sendFromSmsc = async (phones, message, sender) => {
   try {
     const params = new URLSearchParams()
-    params.append('login', login)
-    params.append('psw', password)
+    params.append('login', process.env.SMSC_LOGIN)
+    params.append('psw', process.env.SMSC_PASS)
     params.append('charset', charset)
     params.append('fmt', 3)
     params.append('phones', phones)
