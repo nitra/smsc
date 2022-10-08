@@ -1,9 +1,10 @@
 {
   "name": "smsc",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
+  "types": "./types/index.d.ts",
   "exports": {
     ".": "./src/index.js"
   },
@@ -48,6 +49,7 @@
     "node": ">=18.0.0"
   },
   "files": [
-    "src"
+    "src",
+    "types"
   ]
 }

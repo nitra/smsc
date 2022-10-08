@@ -3,7 +3,16 @@ import { isProd } from '@nitra/isenv'
 
 const charset = 'utf-8'
 
-// Отправка CMC
+/**
+ * Отправка CMC
+ *
+ * @param {String} phones
+ * @param {String} message
+ * @param {String} sender
+ * @param {Number} distributionId
+ *
+ * @return {Promise<{cnt: number?,error_code:number? }>} результат отправки
+ */
 export const sendSms = async (phones, message, sender = null, distributionId = null) => {
   let data
 
@@ -132,7 +141,12 @@ const masks = {
   999: 'ru'
 }
 
-// получить страну по коду оператора из телефона
+/**
+ * Получить страну по коду оператора из телефона
+ *
+ * @param {String} phone
+ * @return {String} ua или ru
+ */
 export const getCountry = phone => {
   const mask = phone.slice(-10, -7)
   if (mask && masks[mask]) {
@@ -242,9 +256,8 @@ const sendFromSmsc = async (phones, message, sender) => {
       method: 'POST',
       body: params
     })
-    const data = await response.json()
 
-    return data
+    return response.json()
   } catch (err) {
     console.error(err)
     return err
