@@ -23,7 +23,10 @@ jobs:
           node-version: 18
 
       - name: Generate d.ts
-        run: npx -p typescript tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types
+        run: |
+          ls -la
+          ls src/
+          npx -p typescript tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types
 
       - name: standard fix
         run: yarn standard
