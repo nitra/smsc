@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
@@ -11,7 +11,8 @@
   "scripts": {
     "standard": "npx standard --fix",
     "fix": "npx standard --fix && npx prettier --write .",
-    "test": "env $(cat .env .env.secret) npx coverage-node test/index.js"
+    "test": "env $(cat .env .env.secret) npx coverage-node test/index.js",
+    "types": "npx -p typescript tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types"
   },
   "keywords": [
     "vodafone",
