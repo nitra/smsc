@@ -1,15 +1,8 @@
 {
   "version": "0.2",
   "language": "en,uk,ru-ru",
-  "ignorePaths": [
-    "**/node_modules/**",
-    "**/vscode-extension/**",
-    "**/.git/**",
-    ".vscode",
-    "yarn.lock",
-    "report"
-  ],
-  "import": [],
+  "ignorePaths": ["**/node_modules/**", "**/vscode-extension/**", "**/.git/**", ".vscode", "yarn.lock", "report"],
+  "import": ["@cspell/dict-ru_ru/cspell-ext.json", "@cspell/dict-uk-ua/cspell-ext.json"],
   "words": [
     "Chernigiv",
     "isenv",

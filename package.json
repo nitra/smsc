@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
@@ -30,6 +30,8 @@
   },
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
+    "@cspell/dict-ru_ru": "^2.0.2",
+    "@cspell/dict-uk-ua": "^2.0.0",
     "@nitra/eslint-config": "^1.0.22",
     "@nitra/prettier-config": "^1.0.0",
     "test-director": "10.0.0"

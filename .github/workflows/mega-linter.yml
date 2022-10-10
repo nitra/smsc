@@ -70,6 +70,7 @@ jobs:
           JAVASCRIPT_DEFAULT_STYLE: standard
           TEXT_REPORTER: false
           UPDATED_SOURCES_REPORTER: false
+          ADDITIONAL_EXCLUDED_DIRECTORIES: ['types']
 
       # Mega-Linter
       - name: Mega-Linter Prettier
