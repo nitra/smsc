@@ -1,5 +1,6 @@
 import { keyv } from './keyv.js'
 import { isProd } from '@nitra/isenv'
+import fetch from 'node-fetch'
 
 const charset = 'utf-8'
 

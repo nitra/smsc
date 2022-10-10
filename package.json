@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
@@ -30,16 +30,17 @@
   },
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
+    "@nitra/eslint-config": "^1.0.22",
     "@nitra/prettier-config": "^1.0.0",
-    "test-director": "10.0.0",
-    "@nitra/eslint-config": "^1.0.22"
+    "test-director": "10.0.0"
   },
   "prettier": "@nitra/prettier-config",
   "dependencies": {
     "@keyv/redis": "^2.5.1",
     "@nitra/check-env": "^2.0.6",
     "@nitra/isenv": "^2.0.1",
-    "keyv": "^4.5.0"
+    "keyv": "^4.5.0",
+    "node-fetch": "^3.2.10"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +48,7 @@
     ]
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0"
   },
   "files": [
     "src",
