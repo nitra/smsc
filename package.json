@@ -1,6 +1,6 @@
 {
   "name": "smsc",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Vodafone & SMSC.ru api",
   "type": "module",
   "main": "./src/index.js",
