@@ -191,7 +191,7 @@ export const sendSmsMoldova = async (to, otpCode, validity, origin) => {
     const data = {
       username: process.env.MOLDOVA_USERNAME,
       password: process.env.SMS_PASS,
-      from: 'BONO', // EFESMOLDOVA
+      from: process.env.MOLDOVA_FROM, // EFESMOLDOVA
       to,
       text: `Your code: ${otpCode} \n@${domain} #${otpCode}`,
       validity
