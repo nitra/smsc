@@ -43,7 +43,6 @@ export const sendSms = async (phones, message, sender = null, distributionId = n
 
   return data
 }
-
 // коды операторов
 const masks = {
   // ua
@@ -141,7 +140,6 @@ const masks = {
   997: 'ru',
   999: 'ru'
 }
-
 /**
  * Получить страну по коду оператора из телефона
  *
@@ -184,6 +182,29 @@ const getVfToken = async () => {
   await keyv.set('vfRefreshToken', data.refresh_token, (data.refresh_token_expires_in - 30) * 1000)
 
   return data.access_token
+}
+
+export const sendSmsMoldova = async (to, otpCode, validity, origin) => {
+  const domain = origin?.hostname || 'app.bono.md'
+
+  try {
+    const data = {
+      username: process.env.MOLDOVA_USERNAME,
+      password: process.env.SMS_PASS,
+      from: 'BONO', // EFESMOLDOVA
+      to,
+      text: `Your code: ${otpCode} \n@${domain} #${otpCode}`,
+      validity
+    }
+
+    const resp = await fetch(`https://prepay.inter-mob.com/send.php?${new URLSearchParams(data).toString()}`, {
+      method: 'GET'
+    })
+
+    console.info(`send-sms. phone: ${to}, otpCode: ${otpCode}, status: ${resp.status}, statusText: ${resp.statusText}`)
+  } catch (error) {
+    console.error(`error-send-sms. (phone: ${to}, otpCode: ${otpCode}).`, error)
+  }
 }
 
 const sendFromVf = async (phoneNumber, content, sender, distributionId) => {
