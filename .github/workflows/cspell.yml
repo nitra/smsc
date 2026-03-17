@@ -1,0 +1,27 @@
+name: CSpell AI assistant
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  cspell-ai-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write # Дозволяємо генерацію OIDC токена
+    steps:
+      - name: Request AI CSpell Analysis
+        run: |
+          # Отримуємо OIDC токен через внутрішній API GitHub Actions
+          ID_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
+          # Відправляємо запит на сервер аналізу
+          # Публічний URL сервера https://nitra.dev/spell-ai/ (dev) або https://7n.ai/spell-ai/ (prod)
+          curl -s -i -X POST "https://7n.ai/spell-ai/analyze" \
+            -H "Authorization: Bearer $ID_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"repo\": \"${{ github.repository }}\", \"prNumber\": ${{ github.event.pull_request.number }}}"
