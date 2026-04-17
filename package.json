@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/nitra/smsc#readme",
   "devDependencies": {
+    "@cspell/dict-uk-ua": "^4.0.6",
+    "@nitra/cspell-dict": "^1.0.186",
     "prettier-config-standard": "^4.0.0"
   },
   "dependencies": {
